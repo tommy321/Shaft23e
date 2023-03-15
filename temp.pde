@@ -1,0 +1,288 @@
+
+#if ONE_MAX //configure and demo one MAX6966
+  senddata(0x10, 0x00); //set unit to shutdown.
+  senddata(0x12, 0x07); //set 4 second ramp up to full current. 
+  senddata(0x11, 0x07); //set 4 second ramp down to no current.
+  senddata(0x13, 0xFF); //set P0-P7 to full constant current. 
+  senddata(0x14, 0x03); //set P8-P9 to full current. 
+  senddata(0x15, 0x07); // set global full current to 2.5mA
+  senddata(0x0A, ON); //Set all ports to on
+  senddata(0x10, 0x41); //set the chip to run mode (with ramp up).
+  
+  senddata(RedLed, ON);
+  senddata(0, ON);
+  senddata(GreenLed, OFF);
+  senddata(1, OFF);
+  senddata(BlueLed, OFF);
+  senddata(2, OFF);
+  delay(1000);
+  senddata(RedLed, OFF); // Red LED Off
+  senddata(0, OFF); // Red LED Off
+  senddata(GreenLed, ON); //Green LED On
+  senddata(1, ON); //Green LED On
+  delay(1000);
+  senddata(GreenLed, OFF); //Green LED Off
+  senddata(1, OFF); //BlueLED On
+  senddata(BlueLed, ON); //BlueLED On
+  senddata(2, ON); //BlueLED On
+  delay(1000);
+  senddata(BlueLed, OFF); //BlueLed Off
+  senddata(2, OFF); //BlueLed Off
+  delay(1000);
+  //red, green on, blue off
+  senddata(RedLed, ON);
+  senddata(GreenLed, ON);
+  senddata(BlueLed, OFF);
+  delay(1000);
+#endif  
+ 
+#if TWO_MAX
+  send4byte(0x10, 0x00, 0x10, 0x00); //set unit to shutdown.
+  delay(100);
+  send4byte(0x15, 0x07, 0x15, 0x07); // set global full current to 20mA
+  send4byte(0x0A, ON, 0x0A, ON); //Set all ports to on
+  send4byte(0x10, 0x01, 0x10, 0x01); //set the chip to run mode (with ramp up).
+#endif
+//for  {
+//  //Randomly pick a new colour
+//  Red = random(300, 25400);
+//  Green = random(300,25400);
+//  Blue = random(300,25400);
+//  RedLed = 0; 
+//  GreenLed = 0; 
+//  BlueLed = 0;
+//  
+//  //calculate the step size to get there in 100 steps
+//  RedDelta = Red/100;
+//  GreenDelta = Green/100;
+//  BlueDelta = Blue/100;
+//  
+//  //Turn off the lights 
+//  senddata(0, 0x03);
+//  senddata(1, 0x03);
+//  senddata(2, 0x03);
+//  //Fade up the lights
+//  for (int a=0; a<100; a++) {
+//    RedLed = RedLed + RedDelta;
+//    GreenLed = GreenLed + GreenDelta;
+//    BlueLed = BlueLed + BlueDelta;
+//    constrain(RedLed, 3, 254);
+//    constrain(GreenLed, 3, 254);
+//    constrain(BlueLed, 3, 254);
+////    Serial.print("Fade Up:");
+////    Serial.print(a);
+////	Serial.print("\tR: ");
+////	Serial.print(RedLed);
+////	Serial.print("\tG :");
+////	Serial.print(GreenLed);
+////	Serial.print("\tB :");
+////	Serial.print(BlueLed);
+////    Serial.println(a);
+//    //write the new colours to the LEDs:
+//    senddata(0, RedLed/100);
+//    senddata(1, GreenLed/100);
+//    senddata(2, BlueLed/100);
+//    delay(1);
+//  } 
+//  delay(100);
+//  Serial.print(j);
+//  //Fade down the lights
+//  for (int a=0; a<100; a++) {
+//    RedLed = RedLed - RedDelta;
+//    GreenLed = GreenLed - GreenDelta;
+//    BlueLed = BlueLed - BlueDelta;
+//    constrain(RedLed, 3, 254);
+//    constrain(GreenLed, 3, 254);
+//    constrain(BlueLed, 3, 254);
+////    Serial.print("Fade Down:");
+////    Serial.print(a);
+////    Serial.print("\tR: ");
+////    Serial.print(RedLed);
+////    Serial.print("\tG :");
+////    Serial.print(GreenLed);
+////    Serial.print("\tB :");
+////    Serial.println(BlueLed);
+//    //write the new colours to the LEDs:
+//    senddata(0, RedLed/100);
+//    senddata(1, GreenLed/100);
+//    senddata(2, BlueLed/100);
+//    delay(1);
+//  } 
+// }
+
+
+#if 0
+//the lines below will manually cycle through the LEDS on the protoype board.
+send8byte(0x05, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x09, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x09, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x00, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x00, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x08, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x08, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x01, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x01, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+senddata(0x07, ON);
+send8byte(0x07, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x07, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x02, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x02, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x06, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x06, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x03, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x03, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x05, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x05, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x04, ON, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x04, OFF, 0x20, 0x00, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x09, ON, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x09, OFF, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x08, ON, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x08, OFF, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x07, ON, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x07, OFF, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x02, ON, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x02, OFF, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x00, ON, 0x20, 0x00, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x00, OFF, 0x20, 0x00, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x03, ON, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x03, OFF, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x06, ON, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x06, OFF, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x02, ON, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x02, OFF, 0x20, 0x00);
+//Start Board 6
+send8byte(0x20, 0x00, 0x20, 0x00, 0x05, ON, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x05, OFF, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x04, ON, 0x20, 0x00);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x04, OFF, 0x20, 0x00);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x05, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x05, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x01, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x01, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x06, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x06, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x00, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x00, OFF);
+//start board 9
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x08, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x08, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x02, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x02, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x07, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x07, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x04, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x04, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x09, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x09, OFF);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x03, ON);
+delay(update_colour_delay);
+send8byte(0x20, 0x00, 0x20, 0x00, 0x20, 0x00, 0x03, OFF);
+
+
+#if TWO_MAX  
+if (millis()-modestart>=MODE_TIMER) {
+  Serial.print(millis());
+  Serial.print("\t");
+  Serial.print(modestart);
+  Serial.print("\t");
+  Serial.print(modeflag);
+  Serial.println(" Update ModeFlag");
+  modestart = millis();
+  modeflag += 1;
+  Complete = 1;
+}
+
+
+if (millis()-last_colour_update>update_colour_delay) {
+  last_colour_update = millis();
+  switch(modeflag) { 
+    case 1:
+      randomcolours();
+      Serial.print("Random Colours");
+      break;
+    case 2:
+      fade_random();
+      Serial.print("Fade Random Colours");
+      break;
+    case 3:
+      flash_random();
+      Serial.print("Flash Random Colours");      
+      break;
+    case 4:
+      modeflag = 1;
+      Serial.print("Reset Mode");      
+      break;
+  }
+}
+
+
+
+//Update the output ports.
+if (millis()-last_SPI_update>update_SPI_delay) {
+  updatechannels();
+  Serial.print("Channels Updated:");
+  Serial.print("\t");
+  Serial.print("R:");
+  Serial.print(Colour[RedLed]);
+  Serial.print("\t");
+  Serial.print("G:");
+  Serial.print(Colour[GreenLed]);
+  Serial.print("\t");
+  Serial.print("B:");
+  Serial.println(Colour[BlueLed]);
+  last_SPI_update = millis();
+}
+
+
+
+#endif
+
+#if ONE_MAX
+//randomcolors();
+//senddata(0x0A, ON);
+Serial.println("0x0A, ON");
+delay(1000);
+senddata(0x00, OFF);
+Serial.println("0x00, OFF");
+delay(1000);
+senddata(0x00, ON);
+senddata(0x01, OFF);
+Serial.println("0x02, OFF");
+delay(1000);
+senddata(0x01, ON);
+senddata(0x02, OFF);
+delay(1000);
+
+#endif
+
+#endif
